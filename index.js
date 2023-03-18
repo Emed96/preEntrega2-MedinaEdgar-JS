@@ -1,3 +1,10 @@
+class Usuarios{
+    constructor(usuario, password){
+        this.usuario = usuario;
+        this.password = password;
+    }
+}
+
 class Producto{
     constructor(nom, descrip, precio, stock){
         this.nom = nom;
@@ -13,9 +20,11 @@ class Producto{
     comprados(cantidad){
         this.stock -= cantidad;
     }
-
-    
 }
+
+let u = [
+    new Usuarios("admin", "admin123") // Credenciales de Administrador
+];
 
 let p = [
     new Producto("Termo", "Termo para bebidas frias o calientes", 195.00, 100),
@@ -65,6 +74,32 @@ function Comprar(){
     alert(`Total a pagar: $${monto}`)
 }
 
+function menuAdministrador(opcion) {
+    switch (opcion) {
+        case 1: //Añadir usuario
+            
+            break;
+    
+        case 2: //Añadir producto
+            
+            break;
+        
+        case 3: //Aplicar oferta
+            const descuento = parseFloat(prompt("Que porcentaje desea aplicar a los productos en dos digitos(XX): ").substring(0,2));
+            p.map(prod => {
+                //console.log(prod);
+                prod.precio *= (1 - (descuento / 100))
+                console.log(prod.precio);});
+            console.log(consulta());
+            break;
+    
+        default:
+            break;
+    }
+
+    return true;
+}
+
 const consulta = () => {
     let txt = "";
     let i = 0;
@@ -78,8 +113,6 @@ const consulta = () => {
 }
 
 const menu = (opcion) => {
-    console.log(`Estoy en el menu: ${opcion}`);
-
     switch (opcion) {
         case 1: //Ver productos
             alert(consulta());
@@ -96,25 +129,48 @@ const menu = (opcion) => {
             p[op].addStock(cantidad);
             break;
 
+        /*case 4: //Menu Administrador
+            alert(`CREDENCIALES DE ADMINISTRADOR
+                Usuario: ${u[0].usuario}
+                Password: ${u[0].password}`);
+            
+            const usuario = prompt("Introdusca usuario: ");
+            const password = prompt("Introdusca contraseña: ");
+
+            if (u[0].usuario === usuario && u[0].password === password) {
+                let termino;
+                do {
+                    const opcion = parseInt(prompt("Que desea hacer?\n" +
+                        "   1 - Añadir usuarios\n" + 
+                        "   2 - Añadir productos\n" +
+                        "   3 - Aplicar oferta\n" +
+                        "   4 - Salir"));
+            
+                    termino = opcion != 4 ? menuAdministrador(opcion) : false;
+        
+                } while (termino);
+            }
+            
+            break;
+*/
         default:
-            alert("Ingrese una opcion correcta (1, 2, 3, 4)");
+            alert("Ingrese una opcion correcta (1, 2, 3, 4, 5)");
             break;
     }
 
     return true;
 };
 
-{
-    let opcion;
+{ //Main
     let termino;
 
-    console.log(p.length);
     do {
-        opcion = parseInt(prompt(`Que desea hacer?
-        1 - Ver productos
-        2 - Comprar productos
-        3 - Añadir productos al stock
-        4 - Salir`));
+        const opcion = parseInt(prompt("Que desea hacer?\n\n" +
+        "   1 - Ver productos\n" +
+        "   2 - Comprar productos\n" +
+        "   3 - Añadir productos al stock\n" +
+        //"   4 - Menu Administrador\n" +
+        "   4 - Salir"));
         
         termino = opcion != 4 ? menu(opcion) : false;
     
